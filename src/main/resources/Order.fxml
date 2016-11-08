@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order">
+   <children>
+      <Button onAction="#fotoclick" layoutX="39.0" layoutY="489.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="340.0" text="Фото часов" />
+      <TextField fx:id="models_clock" layoutX="39.0" layoutY="87.0" prefHeight="25.0" prefWidth="340.0" />
+      <TextArea fx:id="node_clients" layoutX="39.0" layoutY="153.0" prefHeight="90.0" prefWidth="340.0" />
+      <TextField fx:id="price1_t" layoutX="37.0" layoutY="280.0" />
+      <CheckBox fx:id="price_box" layoutX="199.0" layoutY="284.0" mnemonicParsing="false" onMouseClicked="#prise" text="Уплачено полную сумму" />
+      <TextField fx:id="price2_t" layoutX="37.0" layoutY="338.0" />
+      <Label layoutX="39.0" layoutY="32.0" text="Номер заказа :" />
+      <Label layoutX="37.0" layoutY="255.0" text="Стоимость ремонта" />
+      <Label layoutX="37.0" layoutY="380.0" text="Мастер исполнитель" />
+      <Label layoutX="37.0" layoutY="312.0" text="Уплачено" />
+      <Label layoutX="417.0" layoutY="64.0" text="Поиск клинта в базе по номеру телефона" />
+      <Label layoutX="417.0" layoutY="33.0" text="Клиенсткая база" />
+      <Label layoutX="40.0" layoutY="64.0" text="Модель часов" />
+      <Label layoutX="39.0" layoutY="128.0" text="Примечания клиента" />
+      <Label fx:id="stik" layoutX="124.0" layoutY="32.0" text="0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="master_box" layoutX="36.0" layoutY="405.0" prefHeight="25.0" prefWidth="340.0" />
+      <TableView fx:id="table_client" layoutX="417.0" layoutY="128.0" prefHeight="269.0" prefWidth="540.0">
+        <columns>
+            <TableColumn fx:id="key_client" prefWidth="30.0" text="№" />
+            <TableColumn fx:id="fio_client" prefWidth="180.0" text="Ф И О" />
+            <TableColumn fx:id="phone_client" prefWidth="150.0" text="Телефон" />
+            <TableColumn fx:id="note_client" prefWidth="180.0" text="Примечания" />
+        </columns>
+      </TableView>
+      <TextField fx:id="poisk" layoutX="417.0" layoutY="87.0" prefHeight="25.0" prefWidth="230.0" />
+      <Pane fx:id="pane_new_cl" layoutX="416.0" layoutY="441.0" prefHeight="200.0" prefWidth="470.0">
+         <children>
+            <Button layoutX="121.0" layoutY="161.0" mnemonicParsing="false" onAction="#ButtonNewClient" prefHeight="25.0" prefWidth="340.0" text="Добавить нового клиента в базу и заказ" />
+            <Label layoutX="14.0" layoutY="14.0" text="Ф. И. О. клиента" />
+            <TextField fx:id="fio_client_new" layoutX="121.0" layoutY="10.0" prefHeight="25.0" prefWidth="340.0" />
+            <TextField fx:id="phon_client_new" layoutX="121.0" layoutY="50.0" prefHeight="25.0" prefWidth="340.0" />
+            <TextArea fx:id="note_client_new" layoutX="121.0" layoutY="86.0" prefHeight="57.0" prefWidth="340.0" />
+            <Label layoutX="14.0" layoutY="54.0" text="Телефон" />
+            <Label layoutX="14.0" layoutY="92.0" text="Примечания" />
+         </children>
+      </Pane>
+      <Button layoutX="417.0" layoutY="405.0" mnemonicParsing="false" onAction="#Client_vars" prefHeight="25.0" prefWidth="149.0" text="Новый клиент" />
+      <Label fx:id="client_in_db" layoutX="687.0" layoutY="91.0" text="Клинет не идентифицирован" />
+      <Label fx:id="client_new" layoutX="612.0" layoutY="409.0" prefHeight="17.0" prefWidth="268.0" />
+      <Button layoutX="39.0" layoutY="531.0" mnemonicParsing="false" onAction="#FinalOrder" prefHeight="25.0" prefWidth="340.0" text="Проверка заказа" />
+      <Label fx:id="Layout_local_time" layoutX="36.0" layoutY="441.0" text="Дата заказа : " />
+   </children>
+</Pane>

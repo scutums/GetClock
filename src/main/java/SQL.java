@@ -1,0 +1,191 @@
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Created by Alexander on 05.11.2016.
+ */
+public class SQL {
+    private static final String URL = "jdbc:mysql://localhost:3306/clock";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+
+    private Connection connection;
+    private Statement statement;
+    public ObservableList<Client_table> Client_Data = FXCollections.observableArrayList();
+    public ObservableList<String>masterData = FXCollections.observableArrayList();
+    public List<String> stikk = new ArrayList<String>();
+    public Integer Client_id_clock;
+    public Integer Clock_id_clock;
+
+
+
+    public SQL()
+    {
+        try {
+            connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            if(!connection.isClosed())
+            {
+                System.out.println( "Соединение с БД установлено");
+            }
+            statement = (Statement) connection.createStatement();
+
+        } catch (SQLException e){ e.printStackTrace();}
+    }
+
+    public void BDWORK_READ_CLIENT()// метод заполнения таблицы базы клиентов
+    {
+
+        try {
+            ResultSet tab = statement.executeQuery("select * from client_tb;");
+
+            int x = tab.getMetaData().getColumnCount();
+
+            while (tab.next()) {
+                int A1 = tab.getInt(1);
+                String A2 = tab.getString(2);
+                int A3 = tab.getInt(3);
+                String A4 = tab.getString(4);
+                Client_Data.add(new Client_table(A1,A2,A3,A4));
+            }
+        }catch (SQLException e){e.printStackTrace();}
+    }
+
+    public void BDWOKR_READ_MASTER() // таблица мастер чтение
+    {
+        try {
+            ResultSet master = statement.executeQuery("SELECT id_master, name_master FROM master_tb;");
+
+            while (master.next())
+            {
+                int master_id = master.getInt(1);
+                String A2 = master.getString(2);
+                String A = master_id +" "+ A2;
+                masterData.addAll(A);
+            }
+        }catch (SQLException e){e.printStackTrace();}
+
+    }
+
+    public void BDWOKR_READ_STICK() // таблица мастер чтение
+    {
+        try {
+            ResultSet stickss = statement.executeQuery("SELECT id_stick FROM repair_tb;");
+
+            while (stickss.next())
+            {
+                String X = stickss.getString(1);
+                stikk.add(X);
+            }
+        }catch (SQLException e){e.printStackTrace();}
+
+    }
+
+    public void BDWORK_WRITE_CLIENT(String FIO,int PHON_CLI,String NOTE_CLI)
+    {
+        try {
+            ArrayList id = new ArrayList();
+
+            ResultSet id_client = statement.executeQuery("select * from client_tb");
+            while (id_client.next()) {
+                int i = id_client.getInt("id_client");
+                id.add(i);
+            }
+            Integer maxKey = (Integer) Collections.max(id);
+            Client_id_clock = maxKey + 1;
+            String name_client = FIO;
+            int phone_cl = PHON_CLI;
+            String note_cl = NOTE_CLI;
+
+            String stri = "insert into client_tb values(?,?,?,?)";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(stri);
+            prep.setInt(1, Client_id_clock);
+            prep.setString(2, name_client);
+            prep.setInt(3, phone_cl);
+            prep.setString(4,note_cl);
+
+
+            prep.execute();
+        } catch (SQLException e){e.printStackTrace();}
+    }
+
+    public void BDWOKR_WRITE_CLOCK(String MODEL_CL, int CLIENT_ID_CL) //таблица цасы запись
+    {
+        try {
+            ArrayList ids = new ArrayList();
+
+            ResultSet id_clock = statement.executeQuery("select * from clock_tb");
+            while (id_clock.next()) {
+                int i = id_clock.getInt("id_clock");
+                ids.add(i);
+            }
+            Integer maxKey = (Integer) Collections.max(ids);
+            Clock_id_clock = maxKey + 1;
+            String model_clock = MODEL_CL;
+            int id_clients = CLIENT_ID_CL;
+
+
+            String strit = "insert into clock_tb values(?,?,?)";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(strit);
+            prep.setInt(1, Clock_id_clock);
+            prep.setString(2, model_clock);
+            prep.setInt(3, id_clients);
+
+
+            prep.execute();
+        } catch (SQLException e){e.printStackTrace();}
+    }
+
+    public void BDWORK_WRITE_REPAIR(int clock_id, int id_master, String stick, String date_start,int value, int payment,String note,String image)
+    {
+        try {
+            ArrayList ids = new ArrayList();
+
+            ResultSet id_repair = statement.executeQuery("select * from repair_tb");
+            while (id_repair.next()) {
+                int i = id_repair.getInt("id_repair");
+                ids.add(i);
+            }
+
+            Integer maxKeys = (Integer) Collections.max(ids);
+            int id_repa =maxKeys + 1;
+            int id_cloc = clock_id;
+            int id_maste = id_master;
+            String stikc = stick;
+            String date_st = date_start;
+            int vale = value;
+            int paym = payment;
+            String notes = note;
+            String imeg = image;
+
+
+            String striq = "insert into repair_tb values(?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(striq);
+            prep.setInt(1, id_repa);
+            prep.setInt(2, id_cloc);
+            prep.setInt(3, id_maste);
+            prep.setString(4, stikc);
+            prep.setString(5, date_st);
+            prep.setString(6, "0000-00-00");
+            prep.setInt(7, vale);
+            prep.setInt(8, paym);
+            prep.setString(9,"0000-00-00");
+            prep.setString(10,notes);
+            prep.setString(11,imeg);
+            prep.setString(12, "0000-00-00");
+
+
+            prep.execute();
+        } catch (SQLException e){e.printStackTrace();}
+    }
+
+}
