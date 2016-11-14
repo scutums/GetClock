@@ -7,15 +7,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by Alexander on 05.11.2016.
@@ -64,7 +64,7 @@ public class Order {
     @FXML
     public int id_master;
     @FXML
-    private String local_time, nodes, Ctiks;
+    private String local_time, nodes, Ctiks, masters_name, local_client_f, local_client_p;
     @FXML
     private CheckBox price_box;
     @FXML
@@ -76,9 +76,10 @@ public class Order {
     @FXML
     private TextField poisk;
 
-   // public List<String> global = new ArrayList<String>();
-    public ObservableList<String>global = FXCollections.observableArrayList();
+    @FXML
+    public static Stage orders;
 
+   static public ObservableList<String> global = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
@@ -95,33 +96,48 @@ public class Order {
     @FXML
     private void FinalOrder() throws Exception {
 
-       /* Table_clock();
+        Table_clock();
         ID_MASTER();
         prises();
         nodes_client();
+        global.add("Номер заказа : " + Ctiks);
+        //global.add("Номер часов: " + String.valueOf(db_cont.Clock_id_clock));
+        global.add("Мастер : " + masters_name);
+        global.add("Дата сдачи в ремонт : " + local_time);
+        global.add("Цена ремонта : " + String.valueOf(price1) + " грн." );
+        global.add("Уплачено клиентов (в данный момент) : " + String.valueOf(price2) + " грн.");
+        global.add("Имя клиента : " + local_client_f);
+        global.add("Телефон клиента : " + local_client_p);
+        global.add("Примечания со слов клиента : " + nodes);
 
-        global.add("Номер " + String.valueOf(db_cont.Clock_id_clock));
-        global.add(String.valueOf(id_master));
-        global.add(Ctiks);
-        global.add(local_time);
-        global.add(String.valueOf(price1));
-        global.add(String.valueOf(price2));
-        global.add(nodes);
-*/
+       NewWindow();
+    }
+    @FXML
+    public ObservableList<String> getList()
+    {
+        return global;
+    }
 
-        Stage orders = new Stage();
+    public void finalSQL()
+    {
+//        db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, "noll");
+        System.out.println("OK");
+    }
+    @FXML
+    public void closes()
+    {
+        orders.close();
+    }
+
+    @FXML
+    private void NewWindow() throws Exception
+    {
+        orders = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("FinalOrder.fxml"));
         orders.setTitle("Final Order");
         orders.setScene(new Scene(root));
         orders.setResizable(false);
         orders.show();
-
-        PrintOrder p = new PrintOrder();
-        p.lists();
-        //db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, "noll");
-        //System.out.println("Peremoga" + global );
-
-
     }
 
     @FXML
@@ -154,6 +170,7 @@ public class Order {
 
     public void ID_MASTER() //  Считывание номера мастера.
     {
+        masters_name = master_box.getValue();
         StringTokenizer st = new StringTokenizer(master_box.getValue(), " ");
         while (st.hasMoreTokens()) {
             String i = st.nextToken();
@@ -169,7 +186,9 @@ public class Order {
         int p = Integer.parseInt(phon_client_new.getText());
         String n = note_client_new.getText();
         db_cont.BDWORK_WRITE_CLIENT(f, p, n);
-        client_new.setText("Клиент добавден в базу, и выбран.");
+        local_client_f = f;
+        local_client_p = String.valueOf(p);
+        client_new.setText("Клиент "+ local_client_f +" добавден в базу, и выбран.");
 
     }
 
@@ -194,6 +213,8 @@ public class Order {
 
     public void Selectional(Client_table line) {
         local_ckient = line.getKey_client();
+        local_client_f = line.getName_client();
+        local_client_p = String.valueOf(line.getPhone_client());
         client_in_db.setText("Клиент " + local_ckient + " выбран.");
     }
 

@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order">
    <children>
-      <Button onAction="#fotoclick" layoutX="39.0" layoutY="489.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="340.0" text="Фото часов" />
+      <Button layoutX="39.0" layoutY="489.0" mnemonicParsing="false" onAction="#fotoclick" prefHeight="25.0" prefWidth="340.0" text="Фото часов" />
       <TextField fx:id="models_clock" layoutX="39.0" layoutY="87.0" prefHeight="25.0" prefWidth="340.0" />
       <TextArea fx:id="node_clients" layoutX="39.0" layoutY="153.0" prefHeight="90.0" prefWidth="340.0" />
       <TextField fx:id="price1_t" layoutX="37.0" layoutY="280.0" />
@@ -55,7 +55,7 @@
       </Pane>
       <Button layoutX="417.0" layoutY="405.0" mnemonicParsing="false" onAction="#Client_vars" prefHeight="25.0" prefWidth="149.0" text="Новый клиент" />
       <Label fx:id="client_in_db" layoutX="687.0" layoutY="91.0" text="Клинет не идентифицирован" />
-      <Label fx:id="client_new" layoutX="612.0" layoutY="409.0" prefHeight="17.0" prefWidth="268.0" />
+      <Label fx:id="client_new" layoutX="578.0" layoutY="409.0" prefHeight="17.0" prefWidth="379.0" />
       <Button layoutX="39.0" layoutY="531.0" mnemonicParsing="false" onAction="#FinalOrder" prefHeight="25.0" prefWidth="340.0" text="Проверка заказа" />
       <Label fx:id="Layout_local_time" layoutX="36.0" layoutY="441.0" text="Дата заказа : " />
    </children>
