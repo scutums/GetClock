@@ -34,4 +34,15 @@ public class Main_2 {
 
     }
 
+    @FXML
+    private void EndOrder() throws Exception
+    {
+        Stage orders1 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("OrderEnd.fxml"));
+        orders1.setTitle("END");
+        orders1.setScene(new Scene(root));
+        orders1.setResizable(false);
+        orders1.show();
+    }
+
 }
