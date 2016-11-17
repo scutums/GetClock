@@ -45,4 +45,15 @@ public class Main_2 {
         orders1.show();
     }
 
+    @FXML
+    private void PayOrder() throws Exception
+    {
+        Stage orders2 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("OrderPay.fxml"));
+        orders2.setTitle("END_PAY");
+        orders2.setScene(new Scene(root));
+        orders2.setResizable(false);
+        orders2.show();
+    }
+
 }

@@ -19,7 +19,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#OpenOrder" text="Новый заказ" />
               <MenuItem mnemonicParsing="false" onAction="#EndOrder" text="Выполненный заказ" />
-                  <MenuItem mnemonicParsing="false" text="Сдать заказ" />
+                  <MenuItem mnemonicParsing="false" onAction="#PayOrder" text="Сдать заказ" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Справка">

@@ -23,6 +23,7 @@ public class SQL {
     private Statement statement;
     public ObservableList<Client_table> Client_Data = FXCollections.observableArrayList();
     public ObservableList<Date_end> End_Data = FXCollections.observableArrayList();
+    public ObservableList<Pay_End> Pay_Data = FXCollections.observableArrayList();
     public ObservableList<String>masterData = FXCollections.observableArrayList();
     public List<String> stikk = new ArrayList<String>();
     public Integer Client_id_clock;
@@ -189,9 +190,10 @@ public class SQL {
             prep.execute();
         } catch (SQLException e){e.printStackTrace();}
     }
+
     public void BD_END_TABLE() //выборка в завершение работы
     {
-         try {
+        try {
             ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.note_repair FROM repair_tb, master_tb, clock_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND repair_tb.date_end = '0000-00-00'  ;");
 
             while (tabl.next())
@@ -202,6 +204,30 @@ public class SQL {
                 String A4 = tabl.getString(4);
                 String A5 = tabl.getString(5);
                 End_Data.add(new Date_end(A1,A2,A3,A4,A5));
+            }
+
+        }catch (SQLException e){e.printStackTrace();}
+
+    }
+
+    public void BD_PAY_TABLE() //выборка
+    {
+         try {
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, repair_tb.payment FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.date_end != '0000-00-00';");
+
+            while (tabl.next())
+            {
+                String A1 = tabl.getString(1);
+                String A2 = tabl.getString(2);
+                String A3 = tabl.getString(3);
+                String A4 = tabl.getString(4);
+                String A5 = tabl.getString(5);
+                String A6 = tabl.getString(6);
+                String A7 = tabl.getString(7);
+                Integer A8 = tabl.getInt(8);
+                Integer A9 = tabl.getInt(9);
+                Integer A10 = tabl.getInt(10);
+                Pay_Data.add(new Pay_End(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10));
             }
 
         }catch (SQLException e){e.printStackTrace();}
