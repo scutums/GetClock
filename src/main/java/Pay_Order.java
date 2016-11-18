@@ -1,8 +1,5 @@
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 import java.awt.*;
 import java.awt.print.PageFormat;
@@ -10,30 +7,27 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-
 /**
- * Created by Alexander on 05.11.2016.
+ * Created by Alexander on 18.11.2016.
  */
-
-
-
-public class PrintOrder {
-    Order or = new Order();
+public class Pay_Order {
     @FXML
     private ListView myListView;
+    Order_pay or = new Order_pay();
 
     @FXML
     private void initialize() {
         or.getList();
-       myListView.setItems(or.global);
+        myListView.setItems(or.pay_glo);
     }
 
+
     @FXML
-    public void prin()
+    public void print()
     {
 
 
-           // Получаем объект PrinterJob - он будет предоставлять доступ к сервису печати.
+        // Получаем объект PrinterJob - он будет предоставлять доступ к сервису печати.
         PrinterJob pjob = PrinterJob.getPrinterJob();
 
         // Устанавливаем задание для печати.
@@ -46,12 +40,12 @@ public class PrintOrder {
                     // Рисуем на graphics то, что должно быть отпечатано.
                     //graphics.drawString("Прежде чем задать вопрос, прочтите правила форума!!", 100, 100);
 
-                    for (int i = 0; i <8; i++ ) {
+                    for (int i = 0; i <6; i++ ) {
                         if (i == 0)
                         { shag = 1;}
                         else {shag = i+1; }
 
-                        graphics.drawString(or.global.get(i),100,30*shag);
+                        graphics.drawString(or.pay_glo.get(i),100,30*shag);
                     }
                     return PAGE_EXISTS;
                 }
@@ -67,13 +61,10 @@ public class PrintOrder {
                 // Непосредственно печатаем текст.
                 pjob.print();
 
-              or.closes();
+                or.closes();
 
             } catch(PrinterException pe) {
                 System.out.println("Error printing: " + pe);
             }
     }
-
 }
-
-

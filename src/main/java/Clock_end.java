@@ -14,6 +14,8 @@ import java.awt.*;
 
 public class Clock_end extends SQL {
 
+    Main_2 ma = new Main_2();
+
     @FXML
     private Label local_time_l;
     @FXML
@@ -88,10 +90,6 @@ public class Clock_end extends SQL {
                     if (person.getStick_end().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
-                    /*else if(person.getName_client().toLowerCase().contains(lowerCaseFilter));
-                    {
-                    return true;
-                    }*/
                     return false;
                 });
             });
@@ -122,13 +120,14 @@ public class Clock_end extends SQL {
         stik  = line.getStick_end();
         String mod = line.getModel_end();
         String tim = line.getDat_end();
-        end_line.setText("Заказ № " + stik + ".   Модель : " + mod + ".   Дата поступления : " + tim + ".  -ВЫБРАН.");
+        end_line.setText("Заказ № " + stik + '\n'+'\n'+ "Модель : " + mod + '\n'+'\n'+"Дата поступления : " + tim );
     }
 
     public void update()
     {
         BD_WRITE_END(local_time, stik);
         end.setVisible(true);
+        ma.Close_order_end();
 
     }
 

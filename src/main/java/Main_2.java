@@ -9,7 +9,13 @@ import javafx.stage.Stage;
  */
 public class Main_2 {
 
-    SQL db = new SQL(); //связь с БД
+    //SQL db = new SQL(); //связь с БД
+    @FXML
+    public static Stage orders;
+    @FXML
+    public static Stage orders1;
+    @FXML
+    public static Stage orders2;
 
 
 
@@ -17,7 +23,7 @@ public class Main_2 {
     @FXML
     private void OpenOrder() throws Exception //Новое окно ордера
     {
-        Stage orders = new Stage();
+        orders = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("Order.fxml"));
         orders.setTitle("Order");
         orders.setScene(new Scene(root));
@@ -37,7 +43,7 @@ public class Main_2 {
     @FXML
     private void EndOrder() throws Exception
     {
-        Stage orders1 = new Stage();
+        orders1 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("OrderEnd.fxml"));
         orders1.setTitle("END");
         orders1.setScene(new Scene(root));
@@ -48,12 +54,27 @@ public class Main_2 {
     @FXML
     private void PayOrder() throws Exception
     {
-        Stage orders2 = new Stage();
+        orders2 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("OrderPay.fxml"));
         orders2.setTitle("END_PAY");
         orders2.setScene(new Scene(root));
         orders2.setResizable(false);
         orders2.show();
+    }
+    @FXML
+    public void Close_order()
+    {
+        orders.close();
+    }
+    @FXML
+    public void Close_order_end()
+    {
+        orders1.close();
+    }
+    @FXML
+    public void Close_order_pay()
+    {
+        orders2.close();
     }
 
 }

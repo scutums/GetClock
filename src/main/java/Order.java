@@ -23,7 +23,7 @@ import java.util.*;
 public class Order {
 
     SQL db_cont = new SQL();
-    //  Main_2 ma = new Main_2();
+    Main_2 ma = new Main_2();
 
     @FXML
     private TableView<Client_table> table_client;
@@ -100,6 +100,12 @@ public class Order {
         ID_MASTER();
         prises();
         nodes_client();
+        BigOrder();
+        db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, "noll");
+        NewWindow();
+    }
+    private void BigOrder() // сбор данных
+    {
         global.add("Номер заказа : " + Ctiks);
         //global.add("Номер часов: " + String.valueOf(db_cont.Clock_id_clock));
         global.add("Мастер : " + masters_name);
@@ -109,24 +115,20 @@ public class Order {
         global.add("Имя клиента : " + local_client_f);
         global.add("Телефон клиента : " + local_client_p);
         global.add("Примечания со слов клиента : " + nodes);
-
-       NewWindow();
     }
+
     @FXML
     public ObservableList<String> getList()
     {
         return global;
     }
 
-    public void finalSQL()
-    {
-//        db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, "noll");
-        System.out.println("OK");
-    }
     @FXML
     public void closes()
     {
         orders.close();
+        ma.Close_order();
+
     }
 
     @FXML
@@ -295,10 +297,10 @@ public class Order {
                     if (Integer.toString(person.getPhone_client()).indexOf(newValue) != -1) {
                         return true;
                     }
-                    /*else if(person.getName_client().toLowerCase().contains(lowerCaseFilter));
+                    else if(person.getName_client().toLowerCase().contains(lowerCaseFilter))
                     {
                     return true;
-                    }*/
+                    }
                     return false;
                 });
             });

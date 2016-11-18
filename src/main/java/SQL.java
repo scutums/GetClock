@@ -213,7 +213,7 @@ public class SQL {
     public void BD_PAY_TABLE() //выборка
     {
          try {
-            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, repair_tb.payment FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.date_end != '0000-00-00';");
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, repair_tb.payment FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.date_end != '0000-00-00' AND repair_tb.date_pay ='0000-00-00';");
 
             while (tabl.next())
             {
@@ -247,6 +247,25 @@ public class SQL {
             prep.executeUpdate();
 
         } catch (SQLException e){e.printStackTrace();}
+    }
+    public void BD_PAY_WRITE(String DATES_LOCAL, String DATES, Integer PAY, String STIK)
+    {
+        try{
+            String A1 = DATES_LOCAL;
+            String A2 = DATES;
+            Integer A3 = PAY;
+            String A4 = STIK;
+
+            String pay_end = "UPDATE repair_tb SET date_pay = ?, guarantee = ? , payment = ? WHERE id_stick = ?;";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(pay_end);
+            prep.setString(1,A1);
+            prep.setString(2,A2);
+            prep.setInt(3,A3);
+            prep.setString(4,A4);
+            prep.executeUpdate();
+        }
+        catch (SQLException e){e.printStackTrace();}
+
     }
 
 }

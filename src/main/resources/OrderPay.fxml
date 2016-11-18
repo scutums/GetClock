@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,7 +11,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order_pay">
     <children>
-        <Button layoutX="50.0" layoutY="497.0" mnemonicParsing="false" text="Распечатать чек" />
+        <Button layoutX="50.0" layoutY="497.0" mnemonicParsing="false" onAction="#print" text="Распечатать чек" />
         <TableView fx:id="table_pay" layoutX="50.0" layoutY="111.0" prefHeight="213.0" prefWidth="900.0">
             <columns>
                 <TableColumn fx:id="stick_end" prefWidth="100.0" text="Номер заказа" />
@@ -26,13 +27,14 @@
         <TextField fx:id="poisk" layoutX="50.0" layoutY="70.0" prefHeight="25.0" prefWidth="250.0" />
         <Label layoutX="50.0" layoutY="49.0" text="Поиск по номеру заказа" />
         <Label fx:id="end_line" layoutX="51.0" layoutY="340.0" text="Заказ не выбран" />
-        <Label fx:id="local_time_l" layoutX="51.0" layoutY="371.0" text="Дата сдачи заказа" />
+        <Label fx:id="local_time_l" layoutX="315.0" layoutY="340.0" text="Дата сдачи заказа" />
         <Label fx:id="end" layoutX="315.0" layoutY="431.0" text="Дата завершения гарантийного срока" />
-      <ComboBox fx:id="comboBox" layoutX="50.0" layoutY="427.0" onAction="#lopi" prefHeight="25.0" prefWidth="250.0" />
-      <Label layoutX="51.0" layoutY="403.0" text="Гарантийный срок" />
-      <Label fx:id="vals" layoutX="277.0" layoutY="468.0" text="Было уплачено : " />
-      <Label fx:id="pays" layoutX="480.0" layoutY="468.0" text="Требуется доплатить : " />
-      <Label fx:id="sym" layoutX="51.0" layoutY="468.0" text="Общая сумма :" />
+      <ComboBox fx:id="comboBox" layoutX="315.0" layoutY="399.0" onAction="#lopi" prefHeight="25.0" prefWidth="250.0" />
+      <Label layoutX="313.0" layoutY="372.0" text="Гарантийный срок" />
+      <Label fx:id="vals" layoutX="670.0" layoutY="381.0" text="Было уплачено : " />
+      <Label fx:id="pays" layoutX="670.0" layoutY="423.0" text="Требуется доплатить : " />
+      <Label fx:id="sym" layoutX="670.0" layoutY="340.0" text="Общая сумма :" />
+      <CheckBox fx:id="debt" layoutX="670.0" layoutY="464.0" mnemonicParsing="false" text="Клиент погасил задолженность" />
 
     </children>
 </Pane>
