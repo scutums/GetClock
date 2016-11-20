@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Back_Order">
+    <children>
+        <Button layoutX="743.0" layoutY="472.0" mnemonicParsing="false" onAction="#update" text="Возврат заказа" />
+        <TableView fx:id="table_back" layoutX="15.0" layoutY="87.0" prefHeight="327.0" prefWidth="1170.0">
+            <columns>
+                <TableColumn fx:id="stick_end" prefWidth="90.0" text="Номер заказа" />
+                <TableColumn fx:id="model_end" prefWidth="105.0" text="Модель часов" />
+                <TableColumn fx:id="master_end" prefWidth="130.0" text="Имя мастера" />
+                <TableColumn fx:id="start_end" prefWidth="80.0" text="Дата приема" />
+                <TableColumn fx:id="dat_end" prefWidth="80.0" text="Дата починки" />
+                <TableColumn fx:id="note_end" prefWidth="170.0" text="Примечания заказа" />
+                <TableColumn fx:id="client" prefWidth="150.0" text="Имя клиента" />
+                <TableColumn fx:id="phone" prefWidth="120.0" text="Телефон" />
+                <TableColumn fx:id="value" prefWidth="70.0" text="Стоимость" />
+                <TableColumn fx:id="note_cl" prefWidth="170.0" text="Примечания клиента" />
+            </columns>
+        </TableView>
+        <TextField fx:id="poisk" layoutX="50.0" layoutY="48.0" prefHeight="25.0" prefWidth="331.0" />
+        <Label layoutX="50.0" layoutY="27.0" text="Поиск по номеру заказа, телефону клиента, и имени клинта" />
+        <Label fx:id="end_line" layoutX="50.0" layoutY="430.0" text="Заказ не выбран" />
+        <Label fx:id="local_time_l" layoutX="743.0" layoutY="430.0" text="Дата возврата заказа" />
+        <CheckBox fx:id="bed_client" layoutX="300.0" layoutY="430.0" onMouseClicked="#pluss" text="Занети в пометки клинта запись" />
+      <TextArea fx:id="notes" layoutX="301.0" layoutY="457.0" prefHeight="80.0" prefWidth="428.0" />
+    </children>
+</Pane>

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Alexander on 05.11.2016.
  */
 public class SQL {
-    private static final String URL = "jdbc:mysql://localhost:3306/clock";
+    private static final String URL = "jdbc:mysql://localhost:3306/clock?zeroDateTimeBehavior=convertToNull";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
@@ -24,6 +24,7 @@ public class SQL {
     public ObservableList<Client_table> Client_Data = FXCollections.observableArrayList();
     public ObservableList<Date_end> End_Data = FXCollections.observableArrayList();
     public ObservableList<Pay_End> Pay_Data = FXCollections.observableArrayList();
+    public ObservableList<Order_back> BACK_Data = FXCollections.observableArrayList();
     public ObservableList<String>masterData = FXCollections.observableArrayList();
     public List<String> stikk = new ArrayList<String>();
     public Integer Client_id_clock;
@@ -267,5 +268,79 @@ public class SQL {
         catch (SQLException e){e.printStackTrace();}
 
     }
+    public void UP_PLUS_NOTE(String STIK, String NOTE)
+    {
+
+        try {
+            String A1 = NOTE;
+            String A2 = STIK;
+
+            String plus = "UPDATE repair_tb SET note_repair = CONCAT (note_repair , ? ) WHERE id_stick = ?";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
+            prep.setString(1,A1);
+            prep.setString(2,A2);
+            prep.executeUpdate();
+        }catch (SQLException e){e.printStackTrace();}
+    }
+    public void BD_BACK_TABLE() //выборка
+    {
+        try {
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, client_tb.note_client  FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.date_pay != '0000-00-00'");
+
+            while (tabl.next())
+            {
+                String A1 = tabl.getString(1);
+                String A2 = tabl.getString(2);
+                String A3 = tabl.getString(3);
+                String A4 = tabl.getString(4);
+                String A5 = tabl.getString(5);
+                String A6 = tabl.getString(6);
+                String A7 = tabl.getString(7);
+                Integer A8 = tabl.getInt(8);
+                Integer A9 = tabl.getInt(9);
+                String A10 = tabl.getString(10);
+                BACK_Data.add(new Order_back(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10));
+            }
+
+        }catch (SQLException e){e.printStackTrace();}
+
+    }
+    public void UP_CL_BED(Integer PHON, String NOTE)
+    {
+        try {
+            String A1 = NOTE;
+            Integer A2 = PHON;
+            String plus = "UPDATE client_tb SET note_client = CONCAT (note_client , ?) WHERE phone_client = ?;";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
+            prep.setString(1,A1);
+            prep.setInt(2,A2);
+            prep.executeUpdate();
+        }catch (SQLException e){e.printStackTrace();}
+    }
+
+    public void UP_BACK_BED(String STIK, String NOTE)
+    {
+        try {
+            String A1 = NOTE;
+            String A2 = STIK;
+            String plus = "UPDATE repair_tb SET date_pay = ?, payment = '0' WHERE id_stick = ?;";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
+            prep.setString(1,A1);
+            prep.setString(2,A2);
+            prep.executeUpdate();
+        }catch (SQLException e){e.printStackTrace();}
+    }
+
+    public void UP_BACK_NOTE(String STIK)
+    {
+        try {
+            String A1 = STIK;
+            String plus = "UPDATE repair_tb SET note_repair = CONCAT (note_repair , '- ВОЗВРАТ -' ) WHERE id_stick = ?;";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
+            prep.setString(1,A1);
+            prep.executeUpdate();
+        }catch (SQLException e){e.printStackTrace();}
+    }
+
 
 }

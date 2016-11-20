@@ -19,7 +19,7 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception{
 
     Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-    primaryStage.setTitle("GET Clock");
+    primaryStage.setTitle("Часовая мастерская");
     primaryStage.setScene(new Scene(root));
     primaryStage.setResizable(false);
     primaryStage.show();

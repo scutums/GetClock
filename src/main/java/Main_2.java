@@ -16,6 +16,8 @@ public class Main_2 {
     public static Stage orders1;
     @FXML
     public static Stage orders2;
+    @FXML
+    public static Stage orders3;
 
 
 
@@ -25,7 +27,7 @@ public class Main_2 {
     {
         orders = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("Order.fxml"));
-        orders.setTitle("Order");
+        orders.setTitle("Оформление заказа");
         orders.setScene(new Scene(root));
         orders.setResizable(false);
         orders.show();
@@ -45,7 +47,7 @@ public class Main_2 {
     {
         orders1 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("OrderEnd.fxml"));
-        orders1.setTitle("END");
+        orders1.setTitle("Ремонт заказа");
         orders1.setScene(new Scene(root));
         orders1.setResizable(false);
         orders1.show();
@@ -56,10 +58,20 @@ public class Main_2 {
     {
         orders2 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("OrderPay.fxml"));
-        orders2.setTitle("END_PAY");
+        orders2.setTitle("Выдача заказа");
         orders2.setScene(new Scene(root));
         orders2.setResizable(false);
         orders2.show();
+    }
+    @FXML
+    private void BackOrder() throws Exception
+    {
+        orders3 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("OrderBack.fxml"));
+        orders3.setTitle("Возврат заказа");
+        orders3.setScene(new Scene(root));
+        orders3.setResizable(false);
+        orders3.show();
     }
     @FXML
     public void Close_order()
@@ -75,6 +87,11 @@ public class Main_2 {
     public void Close_order_pay()
     {
         orders2.close();
+    }
+    @FXML
+    public void Close_order_back()
+    {
+        orders3.close();
     }
 
 }

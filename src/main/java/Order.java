@@ -78,6 +78,9 @@ public class Order {
 
     @FXML
     public static Stage orders;
+    @FXML
+    public static Stage orders1;
+
 
    static public ObservableList<String> global = FXCollections.observableArrayList();
 
@@ -95,6 +98,7 @@ public class Order {
 
     @FXML
     private void FinalOrder() throws Exception {
+
 
         Table_clock();
         ID_MASTER();
@@ -136,10 +140,11 @@ public class Order {
     {
         orders = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("FinalOrder.fxml"));
-        orders.setTitle("Final Order");
+        orders.setTitle("Распечатка чека");
         orders.setScene(new Scene(root));
         orders.setResizable(false);
         orders.show();
+
     }
 
     @FXML
@@ -323,16 +328,12 @@ public class Order {
 
     @FXML
     private void fotoclick() throws IOException {
-/*
-        Webcam webcam = Webcam.getDefault();
-        if (webcam != null) {
-            System.out.println("Webcam" + webcam.getName());
-        } else {
-            System.out.println("Non webcam");
-        }
-        webcam.open();
-        BufferedImage image = webcam.getImage();
 
-        ImageIO.write(image, "PNG", new File("test.png"));*/
+        orders1 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("WebCamOrder.fxml"));
+        orders1.setTitle("Фото изделия");
+        orders1.setScene(new Scene(root));
+        orders1.setResizable(false);
+        orders1.show();
     }
 }

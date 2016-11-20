@@ -3,6 +3,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -40,6 +41,7 @@ public class Clock_end extends SQL {
     private TableColumn<Date_end, String> note_end;
     @FXML
     private TextField poisk;
+
 
     @FXML
     private void initialize() {

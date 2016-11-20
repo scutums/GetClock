@@ -56,6 +56,13 @@ public class Order_pay extends SQL
     @FXML
     private ComboBox comboBox;
     @FXML
+    private CheckBox not_plus;
+    @FXML
+    private TextArea text_not_plus;
+    @FXML
+    private Button pl;
+    private String plu = ".";
+    @FXML
     public static Stage orders1;
     static public ObservableList<String> pay_glo = FXCollections.observableArrayList();
 
@@ -76,6 +83,8 @@ public class Order_pay extends SQL
         TABLE_CLICK();
         filter();
         Box();
+        text_not_plus.setVisible(false);
+        pl.setVisible(false);
 
     }
     private void LOCAL_TIME() //Время на машине.
@@ -184,8 +193,8 @@ public class Order_pay extends SQL
     {
         comboBox.getItems().addAll(
                 "Нет гарантии",
-                "Гарантия на пол года",
-                "Гарантия на год"
+                "Гарантия на три месяца",
+                "Гарантия на пол года"
         );
     }
 
@@ -199,18 +208,18 @@ public class Order_pay extends SQL
             date_garant = local_time;
 
         }
-        if (com == "Гарантия на пол года")
+        if (com == "Гарантия на три месяца")
         {
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.MONTH,6);
+            cal.add(Calendar.MONTH,3);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             date_garant = (sdf.format(cal.getTime()));
             end.setText("Конечная дата : " + date_garant);
         }
-        if (com == "Гарантия на год")
+        if (com == "Гарантия на пол года")
         {
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.YEAR,1);
+            cal.add(Calendar.MONTH,6);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             date_garant = (sdf.format(cal.getTime()));
             end.setText("Конечная дата : " + date_garant);
@@ -245,7 +254,7 @@ public class Order_pay extends SQL
     {
         orders1 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("Pay_Order.fxml"));
-        orders1.setTitle("Pay Order");
+        orders1.setTitle("Печать чека");
         orders1.setScene(new Scene(root));
         orders1.setResizable(false);
         orders1.show();
@@ -270,4 +279,30 @@ public class Order_pay extends SQL
     {
         return pay_glo;
     }
+    @FXML
+    private void pluss()
+    {
+        boolean br = not_plus.isSelected();
+        if (br == false)
+        {
+            text_not_plus.setVisible(false);
+            pl.setVisible(false);
+        }
+        if (br == true)
+        {
+            text_not_plus.setVisible(true);
+            pl.setVisible(true);
+        }
+    }
+    @FXML
+    private void pls()
+    {
+        if (stik != null)
+        {
+        plu = text_not_plus.getText();
+            String x = "  "+plu;
+        UP_PLUS_NOTE(stik,x);
+        }
+    }
+
 }

@@ -26,6 +26,7 @@ public class PrintOrder {
     private void initialize() {
         or.getList();
        myListView.setItems(or.global);
+
     }
 
     @FXML
