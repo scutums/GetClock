@@ -2,6 +2,9 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import java.sql.Connection;
@@ -30,6 +33,7 @@ public class SQL {
     public List<String> stikk = new ArrayList<String>();
     public Integer Client_id_clock;
     public Integer Clock_id_clock;
+    public byte[] master_id;
 
 
 
@@ -351,10 +355,25 @@ public class SQL {
         }catch (SQLException e){e.printStackTrace();}
     }
 
-    public void UP_BACK_NOTE(String STIK) //null
+    public void UP_BACK_NOTE()
     {
+        try {
+            String A1 = "HV-487232";
+            String plus = "SELECT images FROM repair_tb WHERE id_stick = ?;";
 
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
+            prep.setString(1,A1);
+            prep.execute();
+            ResultSet pluss = statement.executeQuery(plus);
+            while (pluss.next())
+            {
+                master_id = plus.getBytes();
+            }
+        System.out.println(master_id);
+        }catch (SQLException e){e.printStackTrace();}
     }
+
+
 
     public void WRITE_MASTER(String NAME_MAS, Integer PH_MAS, String NOTE_MAS) // добавеление мастера
     {

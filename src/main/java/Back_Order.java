@@ -81,7 +81,7 @@ public class Back_Order extends SQL {
         UP_CL_BED(ph,  info);
         }
         UP_BACK_BED(stik,local_time);
-        UP_BACK_NOTE(stik);
+       // UP_BACK_NOTE(stik);
         ma.Close_order_back();
     }
     private void LOCAL_TIME() //Время на машине.

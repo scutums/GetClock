@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main_2">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="600.0">
+      <MenuBar prefHeight="25.0" prefWidth="650.0">
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
@@ -23,6 +23,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#BackOrder" text="Возврат заказа" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Дополнительно">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#ReadFoto" text="Фото часов" />
+                </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Справка">
             <items>
               <MenuItem mnemonicParsing="false" text="Руководство" />

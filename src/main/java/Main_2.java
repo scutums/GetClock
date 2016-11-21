@@ -18,7 +18,8 @@ public class Main_2 {
     public static Stage orders2;
     @FXML
     public static Stage orders3;
-
+    @FXML
+    public static Stage orders4;
 
 
 
@@ -72,6 +73,16 @@ public class Main_2 {
         orders3.setScene(new Scene(root));
         orders3.setResizable(false);
         orders3.show();
+    }
+    @FXML
+    private void ReadFoto() throws Exception
+    {
+        orders4 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("ReadFoto.fxml"));
+        orders4.setTitle("Просмотр фото");
+        orders4.setScene(new Scene(root));
+        orders4.setResizable(false);
+        orders4.show();
     }
     @FXML
     public void Close_order()
