@@ -2,6 +2,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -104,7 +105,12 @@ public class SQL {
                 int i = id_client.getInt("id_client");
                 id.add(i);
             }
-            Integer maxKey = (Integer) Collections.max(id);
+            System.out.println(id);
+            Integer maxKey = 0;
+            if (!id.isEmpty())
+            {
+                maxKey = (Integer) Collections.max(id);
+            }
             Client_id_clock = maxKey + 1;
             String name_client = FIO;
             int phone_cl = PHON_CLI;
@@ -132,7 +138,12 @@ public class SQL {
                 int i = id_clock.getInt("id_clock");
                 ids.add(i);
             }
-            Integer maxKey = (Integer) Collections.max(ids);
+            Integer maxKey = 0;
+            if (!ids.isEmpty())
+            {
+                maxKey = (Integer) Collections.max(ids);
+            }
+            System.out.println(maxKey);
             Clock_id_clock = maxKey + 1;
             String model_clock = MODEL_CL;
             int id_clients = CLIENT_ID_CL;
@@ -149,19 +160,23 @@ public class SQL {
         } catch (SQLException e){e.printStackTrace();}
     }
 
-    public void BDWORK_WRITE_REPAIR(int clock_id, int id_master, String stick, String date_start,int value, int payment,String note,String image)
+    public void BDWORK_WRITE_REPAIR(int clock_id, int id_master, String stick, String date_start,int value, int payment,String note,InputStream image)
     {
         try {
             ArrayList ids = new ArrayList();
 
             ResultSet id_repair = statement.executeQuery("select * from repair_tb");
-            while (id_repair.next()) {
+            while (id_repair.next())
+            {
                 int i = id_repair.getInt("id_repair");
                 ids.add(i);
             }
-
-            Integer maxKeys = (Integer) Collections.max(ids);
-            int id_repa =maxKeys + 1;
+            Integer maxKeys = 0;
+            if (!ids.isEmpty())
+            {
+                maxKeys = (Integer) Collections.max(ids);
+            }
+            Integer id_repa =maxKeys + 1;
             int id_cloc = clock_id;
             int id_maste = id_master;
             String stikc = stick;
@@ -169,7 +184,7 @@ public class SQL {
             int vale = value;
             int paym = payment;
             String notes = note;
-            String imeg = image;
+            String imeg = String.valueOf(image);
 
 
             String striq = "insert into repair_tb values(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -234,6 +249,7 @@ public class SQL {
         }catch (SQLException e){e.printStackTrace();}
 
     }
+
     public void BD_WRITE_END(String DAT, String STIC)
     {
         try {
@@ -249,6 +265,7 @@ public class SQL {
 
         } catch (SQLException e){e.printStackTrace();}
     }
+
     public void BD_PAY_WRITE(String DATES_LOCAL, String DATES, Integer PAY, String STIK)
     {
         try{
@@ -268,6 +285,7 @@ public class SQL {
         catch (SQLException e){e.printStackTrace();}
 
     }
+
     public void UP_PLUS_NOTE(String STIK, String NOTE)
     {
 
@@ -282,6 +300,7 @@ public class SQL {
             prep.executeUpdate();
         }catch (SQLException e){e.printStackTrace();}
     }
+
     public void BD_BACK_TABLE() //выборка
     {
         try {
@@ -305,6 +324,7 @@ public class SQL {
         }catch (SQLException e){e.printStackTrace();}
 
     }
+
     public void UP_CL_BED(Integer PHON, String NOTE)
     {
         try {
@@ -331,15 +351,42 @@ public class SQL {
         }catch (SQLException e){e.printStackTrace();}
     }
 
-    public void UP_BACK_NOTE(String STIK)
+    public void UP_BACK_NOTE(String STIK) //null
+    {
+
+    }
+
+    public void WRITE_MASTER(String NAME_MAS, Integer PH_MAS, String NOTE_MAS) // добавеление мастера
     {
         try {
-            String A1 = STIK;
-            String plus = "UPDATE repair_tb SET note_repair = CONCAT (note_repair , '- ВОЗВРАТ -' ) WHERE id_stick = ?;";
-            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
-            prep.setString(1,A1);
-            prep.executeUpdate();
-        }catch (SQLException e){e.printStackTrace();}
+            ArrayList id = new ArrayList();
+
+            ResultSet id_client = statement.executeQuery("select * from master_tb");
+            while (id_client.next()) {
+                int i = id_client.getInt("id_master");
+                id.add(i);
+            }
+            Integer maxKey = 0;
+            if (!id.isEmpty())
+            {
+                maxKey = (Integer) Collections.max(id);
+            }
+            Integer Id_Master = maxKey + 1;
+            String name_master = NAME_MAS;
+            int phone_master = PH_MAS;
+            String note_master = NOTE_MAS;
+
+            String stri = "insert into master_tb values(?,?,?,?)";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(stri);
+            prep.setInt(1, Id_Master);
+            prep.setString(2, name_master);
+            prep.setInt(3, phone_master);
+            prep.setString(4,note_master);
+
+
+            prep.execute();
+        } catch (SQLException e){e.printStackTrace();}
+
     }
 
 

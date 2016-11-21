@@ -13,8 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.omg.CORBA.INTF_REPOS;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -62,27 +64,27 @@ public class Order {
     @FXML
     private TextArea node_clients;
     @FXML
-    public int id_master;
-    @FXML
     private String local_time, nodes, Ctiks, masters_name, local_client_f, local_client_p;
     @FXML
     private CheckBox price_box;
     @FXML
     public int local_ckient; // перименная для регулярного выражения
-
     public boolean visible_pane_client = false;
-
-    private int price1, price2;
+    private Integer price1, price2,id_master;
     @FXML
     private TextField poisk;
-
     @FXML
     public static Stage orders;
     @FXML
     public static Stage orders1;
+    @FXML
+    private Label error;
+    @FXML
+    private Label foto_tex;
+    public static InputStream mas;
 
 
-   static public ObservableList<String> global = FXCollections.observableArrayList();
+    static public ObservableList<String> global = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
@@ -96,17 +98,29 @@ public class Order {
 
     }
 
+    void text()
+    {
+
+    }
     @FXML
     private void FinalOrder() throws Exception {
 
 
-        Table_clock();
+
         ID_MASTER();
         prises();
         nodes_client();
         BigOrder();
-        db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, "noll");
+        Table_clock();
+        if(id_master != null  & price1 != null &  !nodes.isEmpty() & mas!= null)
+        {
+            db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, mas);
         NewWindow();
+        }
+        else
+        {
+            error.setText("ПРОВЕРЬТЕ ПРАВИЛЬНОСТЬ ВВОДА ДАННЫХ !");
+        }
     }
     private void BigOrder() // сбор данных
     {
@@ -187,16 +201,29 @@ public class Order {
     }
 
     @FXML
-    private void ButtonNewClient() //ввод нового клиента
+    private void ButtonNewClient() //ввод нового клиента + защита от дурака
     {
+        Integer p = 0;
+        String pol = phon_client_new.getText();
         String f = fio_client_new.getText();
-        int p = Integer.parseInt(phon_client_new.getText());
         String n = note_client_new.getText();
-        db_cont.BDWORK_WRITE_CLIENT(f, p, n);
-        local_client_f = f;
-        local_client_p = String.valueOf(p);
-        client_new.setText("Клиент "+ local_client_f +" добавден в базу, и выбран.");
-
+        if (n.isEmpty())
+        {
+            n = ".";
+        }
+        try {
+             p = Integer.parseInt(pol);
+        }
+        catch (NumberFormatException e)
+        {
+            phon_client_new.setText("Введите коректный номер, до 11 чисел");
+        }
+        if (f !=" " & n !=" " & p !=0 ) {
+            db_cont.BDWORK_WRITE_CLIENT(f, p, n);
+            local_client_f = f;
+            local_client_p = String.valueOf(p);
+            client_new.setText("Клиент " + local_client_f + " добавден в базу, и выбран.");
+        }
     }
 
     @FXML
@@ -328,7 +355,6 @@ public class Order {
 
     @FXML
     private void fotoclick() throws IOException {
-
         orders1 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("WebCamOrder.fxml"));
         orders1.setTitle("Фото изделия");
@@ -336,4 +362,6 @@ public class Order {
         orders1.setResizable(false);
         orders1.show();
     }
+
+
 }

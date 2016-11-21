@@ -56,7 +56,12 @@
       <Button layoutX="417.0" layoutY="405.0" mnemonicParsing="false" onAction="#Client_vars" prefHeight="25.0" prefWidth="149.0" text="Новый клиент" />
       <Label fx:id="client_in_db" layoutX="687.0" layoutY="91.0" text="Клинет не идентифицирован" />
       <Label fx:id="client_new" layoutX="578.0" layoutY="409.0" prefHeight="17.0" prefWidth="379.0" />
-      <Button layoutX="39.0" layoutY="531.0" mnemonicParsing="false" onAction="#FinalOrder" prefHeight="25.0" prefWidth="340.0" text="Проверка заказа" />
+      <Button layoutX="39.0" layoutY="554.0" mnemonicParsing="false" onAction="#FinalOrder" prefHeight="25.0" prefWidth="340.0" text="Проверка заказа" />
       <Label fx:id="Layout_local_time" layoutX="36.0" layoutY="441.0" text="Дата заказа : " />
+      <Label fx:id="error" layoutX="36.0" layoutY="606.0" textFill="#ff0202">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="foto_tex" layoutX="37.0" layoutY="524.0"  />
    </children>
 </Pane>

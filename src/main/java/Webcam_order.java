@@ -6,9 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by Alexander on 18.11.2016.
@@ -22,6 +22,7 @@ public class Webcam_order
     @FXML
     private Label error;
     public BufferedImage image;
+    public InputStream fotos;
 
     @FXML
     private void initialize()
@@ -37,11 +38,19 @@ public class Webcam_order
     @FXML
     private void prin() throws Exception
     {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         webcam.open();
         image = webcam.getImage();
-        ImageIO.write(image,"PNG",new File("clock.png"));
+        ImageIO.write(image, "png", baos);
+
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
         webcam.close();
         WritableImage ima = SwingFXUtils.toFXImage(image,null);
         foto.setImage(ima);
+
+
+        Order or = new Order();
+        or.mas = is;
+        System.out.print(or.mas);
     }
 }
