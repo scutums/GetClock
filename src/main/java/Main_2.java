@@ -20,6 +20,8 @@ public class Main_2 {
     public static Stage orders3;
     @FXML
     public static Stage orders4;
+    @FXML
+    public static Stage orders5;
 
 
 
@@ -83,6 +85,16 @@ public class Main_2 {
         orders4.setScene(new Scene(root));
         orders4.setResizable(false);
         orders4.show();
+    }
+    @FXML
+    private void GarantOrder() throws Exception
+    {
+        orders5 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("OrderGarant.fxml"));
+        orders5.setTitle("Гарантийный ремонт");
+        orders5.setScene(new Scene(root));
+        orders5.setResizable(false);
+        orders5.show();
     }
     @FXML
     public void Close_order()

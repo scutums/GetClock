@@ -50,7 +50,7 @@ public class Order_pay extends SQL
     @FXML
     private TableColumn<Pay_End, String> client;
     @FXML
-    private TableColumn<Pay_End, Integer> phone;
+    private TableColumn<Pay_End, String> phone;
     @FXML
     private TableColumn<Pay_End, String> note_end;
     @FXML
@@ -105,7 +105,7 @@ public class Order_pay extends SQL
         start_end.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("start_end"));
         dat_end.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("dat_end"));
         client.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("client"));
-        phone.setCellValueFactory(new PropertyValueFactory<Pay_End, Integer>("phone"));
+        phone.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("phone"));
         note_end.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("note_end"));
         table_pay.setItems(Pay_Data);
     }
@@ -122,7 +122,7 @@ public class Order_pay extends SQL
         stik  = line.getStick_end();
         mod = line.getModel_end();
         String fio = line.getClient();
-        Integer ph = line.getPhone();
+        String ph = line.getPhone();
         name_mas = line.getMaster_end();
         val = line.getValue();
         pay = line.getPayment();
@@ -149,7 +149,7 @@ public class Order_pay extends SQL
     {
         try {
             stick_end.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("stick_end"));
-            phone.setCellValueFactory(new PropertyValueFactory<Pay_End, Integer>("phone"));
+            phone.setCellValueFactory(new PropertyValueFactory<Pay_End, String>("phone"));
 
 
             FilteredList<Pay_End> filteredData = new FilteredList<>(Pay_Data, p -> true);
@@ -165,7 +165,7 @@ public class Order_pay extends SQL
                     if (person.getStick_end().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
-                    else if(Integer.toString(person.getPhone()).indexOf(newValue) != -1)
+                    else if(person.getPhone().toLowerCase().contains(lowerCaseFilter))
                     {
                     return true;
                     }

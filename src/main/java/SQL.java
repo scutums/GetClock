@@ -2,11 +2,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,10 +26,11 @@ public class SQL {
     public ObservableList<Pay_End> Pay_Data = FXCollections.observableArrayList();
     public ObservableList<Order_back> BACK_Data = FXCollections.observableArrayList();
     public ObservableList<String>masterData = FXCollections.observableArrayList();
+    public ObservableList<FOTOCLASS>fotoData = FXCollections.observableArrayList();
     public List<String> stikk = new ArrayList<String>();
     public Integer Client_id_clock;
     public Integer Clock_id_clock;
-    public byte[] master_id;
+
 
 
 
@@ -44,7 +41,7 @@ public class SQL {
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
             if(!connection.isClosed())
             {
-                System.out.println( "Соединение с БД установлено");
+                //System.out.println( "Соединение с БД установлено");
             }
             statement = (Statement) connection.createStatement();
 
@@ -62,9 +59,10 @@ public class SQL {
             while (tab.next()) {
                 int A1 = tab.getInt(1);
                 String A2 = tab.getString(2);
-                int A3 = tab.getInt(3);
+                String A3 = tab.getString(3);
                 String A4 = tab.getString(4);
-                Client_Data.add(new Client_table(A1,A2,A3,A4));
+                String A5 = tab.getString(5);
+                Client_Data.add(new Client_table(A1,A2,A3,A4,A5));
             }
         }catch (SQLException e){e.printStackTrace();}
     }
@@ -99,7 +97,7 @@ public class SQL {
 
     }
 
-    public void BDWORK_WRITE_CLIENT(String FIO,int PHON_CLI,String NOTE_CLI)
+    public void BDWORK_WRITE_CLIENT(String FIO, String PHON_CLI, String ADRES, String NOTE_CLI)
     {
         try {
             ArrayList id = new ArrayList();
@@ -117,15 +115,17 @@ public class SQL {
             }
             Client_id_clock = maxKey + 1;
             String name_client = FIO;
-            int phone_cl = PHON_CLI;
+            String phone_cl = PHON_CLI;
+            String adres = ADRES;
             String note_cl = NOTE_CLI;
 
-            String stri = "insert into client_tb values(?,?,?,?)";
+            String stri = "insert into client_tb values(?,?,?,?,?)";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(stri);
             prep.setInt(1, Client_id_clock);
             prep.setString(2, name_client);
-            prep.setInt(3, phone_cl);
-            prep.setString(4,note_cl);
+            prep.setString(3, phone_cl);
+            prep.setString(4, adres);
+            prep.setString(5, note_cl);
 
 
             prep.execute();
@@ -164,7 +164,7 @@ public class SQL {
         } catch (SQLException e){e.printStackTrace();}
     }
 
-    public void BDWORK_WRITE_REPAIR(int clock_id, int id_master, String stick, String date_start,int value, int payment,String note,InputStream image)
+    public void BDWORK_WRITE_REPAIR(int clock_id, int id_master, String stick, String date_start, String date_end,int value, int payment,String note,InputStream image, int INDIC)
     {
         try {
             ArrayList ids = new ArrayList();
@@ -188,10 +188,12 @@ public class SQL {
             int vale = value;
             int paym = payment;
             String notes = note;
-            String imeg = String.valueOf(image);
+            InputStream imeg = image;
+            String dat_en = date_end;
+            int ind = INDIC;
 
 
-            String striq = "insert into repair_tb values(?,?,?,?,?,?,?,?,?,?,?,?)";
+            String striq = "insert into repair_tb values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(striq);
             prep.setInt(1, id_repa);
             prep.setInt(2, id_cloc);
@@ -203,8 +205,9 @@ public class SQL {
             prep.setInt(8, paym);
             prep.setString(9,"0000-00-00");
             prep.setString(10,notes);
-            prep.setString(11,imeg);
-            prep.setString(12, "0000-00-00");
+            prep.setBlob(11,imeg);
+            prep.setString(12, dat_en);
+            prep.setInt(13, ind);
 
 
             prep.execute();
@@ -214,7 +217,7 @@ public class SQL {
     public void BD_END_TABLE() //выборка в завершение работы
     {
         try {
-            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.note_repair FROM repair_tb, master_tb, clock_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND repair_tb.date_end = '0000-00-00'  ;");
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.note_repair FROM repair_tb, master_tb, clock_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND repair_tb.indicator = '1'  ;");
 
             while (tabl.next())
             {
@@ -233,7 +236,7 @@ public class SQL {
     public void BD_PAY_TABLE() //выборка
     {
          try {
-            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, repair_tb.payment FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.date_end != '0000-00-00' AND repair_tb.date_pay ='0000-00-00';");
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, repair_tb.payment FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.indicator = '2';");
 
             while (tabl.next())
             {
@@ -244,7 +247,7 @@ public class SQL {
                 String A5 = tabl.getString(5);
                 String A6 = tabl.getString(6);
                 String A7 = tabl.getString(7);
-                Integer A8 = tabl.getInt(8);
+                String A8 = tabl.getString(8);
                 Integer A9 = tabl.getInt(9);
                 Integer A10 = tabl.getInt(10);
                 Pay_Data.add(new Pay_End(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10));
@@ -260,7 +263,7 @@ public class SQL {
             String A1 = DAT;
             String A2 = STIC;
 
-            String strit_end = "UPDATE repair_tb SET date_end = ? WHERE id_stick = ?";
+            String strit_end = "UPDATE repair_tb SET date_end = ?, indicator = '2' WHERE id_stick = ?";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(strit_end);
             prep.setString(1,A1);
             prep.setString(2,A2);
@@ -278,7 +281,7 @@ public class SQL {
             Integer A3 = PAY;
             String A4 = STIK;
 
-            String pay_end = "UPDATE repair_tb SET date_pay = ?, guarantee = ? , payment = ? WHERE id_stick = ?;";
+            String pay_end = "UPDATE repair_tb SET date_pay = ?, guarantee = ? , payment = ?, indicator = '3' WHERE id_stick = ?;";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(pay_end);
             prep.setString(1,A1);
             prep.setString(2,A2);
@@ -308,7 +311,7 @@ public class SQL {
     public void BD_BACK_TABLE() //выборка
     {
         try {
-            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, repair_tb.value, client_tb.note_client  FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.date_pay != '0000-00-00'");
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master, repair_tb.date_start, repair_tb.date_end, repair_tb.note_repair, client_tb.name_client, client_tb.phone_client, client_tb.adres , repair_tb.value, repair_tb.payment , client_tb.note_client  FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.indicator = '1' || repair_tb.indicator = '2'");
 
             while (tabl.next())
             {
@@ -319,25 +322,27 @@ public class SQL {
                 String A5 = tabl.getString(5);
                 String A6 = tabl.getString(6);
                 String A7 = tabl.getString(7);
-                Integer A8 = tabl.getInt(8);
-                Integer A9 = tabl.getInt(9);
-                String A10 = tabl.getString(10);
-                BACK_Data.add(new Order_back(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10));
+                String A8 = tabl.getString(8);
+                String A9 = tabl.getString(9);
+                Integer A10 = tabl.getInt(10);
+                Integer A11 = tabl.getInt(11);
+                String A12 = tabl.getString(12);
+                BACK_Data.add(new Order_back(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12));
             }
 
         }catch (SQLException e){e.printStackTrace();}
 
     }
 
-    public void UP_CL_BED(Integer PHON, String NOTE)
+    public void UP_CL_BED(String PHON, String NOTE)
     {
         try {
             String A1 = NOTE;
-            Integer A2 = PHON;
+            String A2 = PHON;
             String plus = "UPDATE client_tb SET note_client = CONCAT (note_client , ?) WHERE phone_client = ?;";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
             prep.setString(1,A1);
-            prep.setInt(2,A2);
+            prep.setString(2,A2);
             prep.executeUpdate();
         }catch (SQLException e){e.printStackTrace();}
     }
@@ -347,7 +352,7 @@ public class SQL {
         try {
             String A1 = NOTE;
             String A2 = STIK;
-            String plus = "UPDATE repair_tb SET date_pay = ?, payment = '0' WHERE id_stick = ?;";
+            String plus = "UPDATE repair_tb SET date_pay = ?, payment = '0', indicator='4' WHERE id_stick = ?;";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
             prep.setString(1,A1);
             prep.setString(2,A2);
@@ -358,18 +363,15 @@ public class SQL {
     public void UP_BACK_NOTE()
     {
         try {
-            String A1 = "HV-487232";
-            String plus = "SELECT images FROM repair_tb WHERE id_stick = ?;";
-
-            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(plus);
-            prep.setString(1,A1);
-            prep.execute();
-            ResultSet pluss = statement.executeQuery(plus);
+            ResultSet pluss = statement.executeQuery("SELECT id_stick, images  FROM repair_tb");
             while (pluss.next())
             {
-                master_id = plus.getBytes();
+                String A1 = pluss.getString(1);
+                InputStream A2 = pluss.getBinaryStream(2);
+                fotoData.add(new FOTOCLASS(A1,A2));
+
             }
-        System.out.println(master_id);
+
         }catch (SQLException e){e.printStackTrace();}
     }
 

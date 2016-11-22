@@ -1,34 +1,30 @@
 /**
- * Created by Alexander on 17.11.2016.
+ * Created by Alexander on 22.11.2016.
  */
-public class Pay_End {
+public class Garante_Table {
+    private String stick_end;//
+    private String model_end;//
+    private String master_end;//
+    private String guarante;//
+    private String note_end;//
+    private String client;//
+    private String phone;//
+    private Integer payment;//
 
-    private String stick_end;
-    private String model_end;
-    private String master_end;
-    private String start_end;
-    private String dat_end;
-    private String note_end;
-    private String client;
-    private String phone;
-    private Integer value;
-    private Integer payment;
-
-    public Pay_End(String stick_end ,String model_end, String master_end, String start_end, String dat_end, String note_end, String client, String phone, Integer value, Integer payment)
+    public Garante_Table(String stick_end ,String model_end, String master_end, String guarante, String note_end, String client, String phone,Integer payment)
     {
         this.stick_end=stick_end;
         this.model_end=model_end;
         this.master_end=master_end;
-        this.start_end=start_end;
-        this.dat_end=dat_end;
+        this.guarante=guarante;
         this.note_end=note_end;
         this.client=client; //
         this.phone=phone;
-        this.value=value;
         this.payment=payment;
+
     }
 
-    public Pay_End(){}
+    public Garante_Table(){}
 
     public String getStick_end()
     {
@@ -57,23 +53,13 @@ public class Pay_End {
         this.master_end=master_end;
     }
 
-
-    public String getStart_end()
+    public String getGuarante()
     {
-        return start_end;
+        return guarante;
     }
-    public void setStart_end(String start_end)
+    public void setGuarante(String guarante)
     {
-        this.start_end=start_end;
-    }
-
-    public String getDat_end()
-    {
-        return dat_end;
-    }
-    public void setDat_end(String dat_end)
-    {
-        this.dat_end=dat_end;
+        this.guarante=guarante;
     }
 
     public String getNote_end()
@@ -101,15 +87,6 @@ public class Pay_End {
     public void setPhone(String phone)
     {
         this.phone=phone;
-    }
-
-    public Integer getValue()
-    {
-        return value;
-    }
-    public void setValue(Integer value)
-    {
-        this.value=value;
     }
 
     public Integer getPayment()

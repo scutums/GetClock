@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OrderGarant">
+    <children>
+        <Button layoutX="936.0" layoutY="472.0" mnemonicParsing="false" onAction="#update" prefHeight="25.0" prefWidth="250.0" text="Распечатать чек" />
+        <TableView fx:id="table_back" layoutX="15.0" layoutY="87.0" prefHeight="327.0" prefWidth="1170.0">
+            <columns>
+                <TableColumn fx:id="stick_end" prefWidth="100.0" text="Номер заказа" />
+                <TableColumn fx:id="model_end" prefWidth="140.0" text="Модель часов" />
+                <TableColumn fx:id="master_end" prefWidth="180.0" text="Имя мастера" />
+                <TableColumn fx:id="guarante" prefWidth="80.0" text="Гарантия до" />
+                <TableColumn fx:id="note_end" prefWidth="250.0" text="Примечания заказа" />
+                <TableColumn fx:id="client" prefWidth="180.0" text="Имя клиента" />
+                <TableColumn fx:id="phone" prefWidth="160.0" text="Телефон" />
+                <TableColumn fx:id="payment" prefWidth="80.0" text="Оплачено" />
+            </columns>
+        </TableView>
+        <TextField fx:id="poisk" layoutX="50.0" layoutY="48.0" prefHeight="25.0" prefWidth="331.0" />
+        <Label layoutX="50.0" layoutY="27.0" text="Поиск по номеру заказа, телефону клиента, и имени клинта" />
+        <Label fx:id="end_line" layoutX="50.0" layoutY="430.0" text="Заказ не выбран" />
+        <Label fx:id="local_time_l" layoutX="936.0" layoutY="430.0" text="Дата оформления заказа" />
+        <CheckBox fx:id="bed_client" layoutX="386.0" layoutY="431.0" onMouseClicked="#pluss" text="Оформить гарантийный заказ" />
+      <ComboBox layoutX="386.0" layoutY="460.0" prefHeight="25.0" prefWidth="330.0" />
+      <DatePicker fx:id="dates_end" layoutX="386.0" layoutY="497.0" prefHeight="25.0" prefWidth="330.0" />
+      <TextField fx:id="note_txt" layoutX="386.0" layoutY="536.0" prefHeight="25.0" prefWidth="330.0" />
+    </children>
+</Pane>

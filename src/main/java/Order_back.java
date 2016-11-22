@@ -10,11 +10,13 @@ public class Order_back extends Pay_End{
     private String dat_end;
     private String note_end;
     private String client;
-    private Integer phone;
+    private String phone;
+    private String adres;
     private Integer value;
+    private Integer payment;
     private String note_cl;
 
-   public Order_back(String stick_end ,String model_end, String master_end, String start_end, String dat_end, String note_end, String client, Integer phone, Integer value, String note_cl)
+   public Order_back(String stick_end ,String model_end, String master_end, String start_end, String dat_end, String note_end, String client, String phone,String adres, Integer value, Integer payment , String note_cl)
    {
        this.stick_end=stick_end;
        this.model_end=model_end;
@@ -24,7 +26,9 @@ public class Order_back extends Pay_End{
        this.note_end=note_end;
        this.client=client; //
        this.phone=phone;
+       this.adres=adres;
        this.value=value;
+       this.payment=payment;
        this.note_cl=note_cl;
    }
 
@@ -94,13 +98,22 @@ public class Order_back extends Pay_End{
         this.client=client;
     }
 
-    public Integer getPhone()
+    public String getPhone()
     {
         return phone;
     }
-    public void setPhone(Integer phone)
+    public void setPhone(String phone)
     {
         this.phone=phone;
+    }
+
+    public String getAdres()
+    {
+        return adres;
+    }
+    public void setAdres(String adres)
+    {
+        this.adres=adres;
     }
 
     public Integer getValue()
@@ -110,6 +123,15 @@ public class Order_back extends Pay_End{
     public void setValue(Integer value)
     {
         this.value=value;
+    }
+
+    public Integer getPayment()
+    {
+        return payment;
+    }
+    public void setPayment(Integer payment)
+    {
+        this.payment=payment;
     }
 
     public String getNote_cl()

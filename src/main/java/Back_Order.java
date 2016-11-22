@@ -11,8 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class Back_Order extends SQL {
     Main_2 ma= new Main_2();
 
-    private String stik,fio, local_time;
-    private Integer ph;
+    private String stik,fio, local_time, ph;
 
     @FXML
     private CheckBox bed_client;
@@ -35,9 +34,13 @@ public class Back_Order extends SQL {
     @FXML
     private TableColumn<Order_back, String> client;
     @FXML
-    private TableColumn<Order_back, Integer> phone;
+    private TableColumn<Order_back, String> phone;
+    @FXML
+    private TableColumn<Order_back, String> adres;
     @FXML
     private TableColumn<Order_back, Integer> value;
+    @FXML
+    private TableColumn<Order_back, Integer> payment;
     @FXML
     private TableColumn<Order_back, String> note_cl;
     @FXML
@@ -81,7 +84,6 @@ public class Back_Order extends SQL {
         UP_CL_BED(ph,  info);
         }
         UP_BACK_BED(stik,local_time);
-       // UP_BACK_NOTE(stik);
         ma.Close_order_back();
     }
     private void LOCAL_TIME() //Время на машине.
@@ -103,8 +105,10 @@ public class Back_Order extends SQL {
         dat_end.setCellValueFactory(new PropertyValueFactory<Order_back, String>("dat_end"));
         note_end.setCellValueFactory(new PropertyValueFactory<Order_back, String>("note_end"));
         client.setCellValueFactory(new PropertyValueFactory<Order_back, String>("client"));
-        phone.setCellValueFactory(new PropertyValueFactory<Order_back, Integer>("phone"));
+        phone.setCellValueFactory(new PropertyValueFactory<Order_back, String>("phone"));
+        adres.setCellValueFactory(new PropertyValueFactory<Order_back, String>("adres"));
         value.setCellValueFactory(new PropertyValueFactory<Order_back, Integer>("value"));
+        payment.setCellValueFactory(new PropertyValueFactory<Order_back, Integer>("payment"));
         note_cl.setCellValueFactory(new PropertyValueFactory<Order_back, String>("note_cl"));
         table_back.setItems(BACK_Data);
     }
@@ -130,7 +134,7 @@ public class Back_Order extends SQL {
         try {
             stick_end.setCellValueFactory(new PropertyValueFactory<Order_back, String>("stick_end"));
             client.setCellValueFactory(new PropertyValueFactory<Order_back, String>("client"));
-            phone.setCellValueFactory(new PropertyValueFactory<Order_back, Integer>("phone"));
+            phone.setCellValueFactory(new PropertyValueFactory<Order_back, String>("phone"));
 
             FilteredList<Order_back> filteredData = new FilteredList<>(BACK_Data, p -> true);
 
@@ -145,7 +149,7 @@ public class Back_Order extends SQL {
                     if (person.getStick_end().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
-                    else if(Integer.toString(person.getPhone()).indexOf(newValue) != -1)
+                    else if(person.getPhone().toLowerCase().contains(lowerCaseFilter))
                     {
                         return true;
                     }

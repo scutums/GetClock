@@ -11,7 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#OpenDb" text="Связь с БД" />
+                  <MenuItem mnemonicParsing="false" onAction="#OpenDb" text="Статистика" />
               <MenuItem mnemonicParsing="false" text="Закрыть" />
             </items>
           </Menu>
@@ -19,13 +19,15 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#OpenOrder" text="Новый заказ" />
               <MenuItem mnemonicParsing="false" onAction="#EndOrder" text="Ремонт заказа" />
-                  <MenuItem mnemonicParsing="false" onAction="#PayOrder" text="Выдача заказа" />
-                  <MenuItem mnemonicParsing="false" onAction="#BackOrder" text="Возврат заказа" />
+                  <MenuItem mnemonicParsing="false" onAction="#PayOrder" text="Готовые заказы" />
+
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Дополнительно">
                 <items>
                     <MenuItem mnemonicParsing="false" onAction="#ReadFoto" text="Фото часов" />
+                    <MenuItem mnemonicParsing="false" onAction="#BackOrder" text="Возврат заказа" />
+                    <MenuItem mnemonicParsing="false" onAction="#GarantOrder" text="Гарантийный ремонт" />
                 </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Справка">

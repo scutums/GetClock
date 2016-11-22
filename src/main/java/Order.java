@@ -17,6 +17,7 @@ import org.omg.CORBA.INTF_REPOS;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -34,7 +35,9 @@ public class Order {
     @FXML
     private TableColumn<Client_table, String> fio_client;
     @FXML
-    private TableColumn<Client_table, Integer> phone_client;
+    private TableColumn<Client_table, String> phone_client;
+    @FXML
+    private TableColumn<Client_table, String> adres;
     @FXML
     private TableColumn<Client_table, String> note_client;
     @FXML
@@ -64,7 +67,7 @@ public class Order {
     @FXML
     private TextArea node_clients;
     @FXML
-    private String local_time, nodes, Ctiks, masters_name, local_client_f, local_client_p;
+    private String local_time, nodes, Ctiks, masters_name, local_client_f, local_client_p,time_end;
     @FXML
     private CheckBox price_box;
     @FXML
@@ -80,7 +83,9 @@ public class Order {
     @FXML
     private Label error;
     @FXML
-    private Label foto_tex;
+    private TextField adres_client;
+    @FXML
+    private DatePicker end_date;
     public static InputStream mas;
 
 
@@ -103,18 +108,16 @@ public class Order {
 
     }
     @FXML
-    private void FinalOrder() throws Exception {
-
-
-
+    private void FinalOrder() throws Exception
+    {
         ID_MASTER();
         prises();
         nodes_client();
         BigOrder();
         Table_clock();
-        if(id_master != null  & price1 != null &  !nodes.isEmpty() & mas!= null)
+        if(id_master != null  & price1 != null &  !nodes.isEmpty() & mas != null & !time_end.isEmpty())
         {
-            db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time, price1, price2, nodes, mas);
+            db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time,time_end, price1, price2, nodes, mas, 1);
         NewWindow();
         }
         else
@@ -165,9 +168,10 @@ public class Order {
     public void Clitent_table() //вывод таблицы клиентов
     {
         db_cont.BDWORK_READ_CLIENT();
-        key_client.setCellValueFactory(new PropertyValueFactory<Client_table, Integer>("key_client"));
+       // key_client.setCellValueFactory(new PropertyValueFactory<Client_table, Integer>("key_client"));
         fio_client.setCellValueFactory(new PropertyValueFactory<Client_table, String>("name_client"));
-        phone_client.setCellValueFactory(new PropertyValueFactory<Client_table, Integer>("phone_client"));
+        phone_client.setCellValueFactory(new PropertyValueFactory<Client_table, String>("phone_client"));
+        adres.setCellValueFactory(new PropertyValueFactory<Client_table, String>("adres"));
         note_client.setCellValueFactory(new PropertyValueFactory<Client_table, String>("note_client"));
         table_client.setItems(db_cont.Client_Data);
     }
@@ -203,23 +207,22 @@ public class Order {
     @FXML
     private void ButtonNewClient() //ввод нового клиента + защита от дурака
     {
-        Integer p = 0;
-        String pol = phon_client_new.getText();
+        String p = phon_client_new.getText();
         String f = fio_client_new.getText();
+        String a = adres_client.getText();
         String n = note_client_new.getText();
         if (n.isEmpty())
         {
             n = ".";
         }
-        try {
-             p = Integer.parseInt(pol);
-        }
-        catch (NumberFormatException e)
+        if (a.isEmpty())
         {
-            phon_client_new.setText("Введите коректный номер, до 11 чисел");
+            a = ".";
         }
-        if (f !=" " & n !=" " & p !=0 ) {
-            db_cont.BDWORK_WRITE_CLIENT(f, p, n);
+
+
+        if (f !=" " & n !=" " & p !=" ") {
+            db_cont.BDWORK_WRITE_CLIENT(f, p, a, n);
             local_client_f = f;
             local_client_p = String.valueOf(p);
             client_new.setText("Клиент " + local_client_f + " добавден в базу, и выбран.");
@@ -308,13 +311,20 @@ public class Order {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         Layout_local_time.setText("Дата заказа : " + String.valueOf(sqlDate));
         local_time = String.valueOf(sqlDate);
+
+        end_date.setOnAction(event ->
+        {
+           LocalDate date = end_date.getValue();
+            time_end = String.valueOf(date);
+        });
     }
 
     public void filter() {
         try {
 
             fio_client.setCellValueFactory(new PropertyValueFactory<Client_table, String>("name_client"));
-            phone_client.setCellValueFactory(new PropertyValueFactory<Client_table, Integer>("phone_client"));
+            phone_client.setCellValueFactory(new PropertyValueFactory<Client_table, String >("phone_client"));
+            adres.setCellValueFactory(new PropertyValueFactory<Client_table, String>("adres"));
 
             FilteredList<Client_table> filteredData = new FilteredList<>(db_cont.Client_Data, p -> true);
 
@@ -326,12 +336,16 @@ public class Order {
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
 
-                    if (Integer.toString(person.getPhone_client()).indexOf(newValue) != -1) {
+                    if (person.getPhone_client().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
                     else if(person.getName_client().toLowerCase().contains(lowerCaseFilter))
                     {
                     return true;
+                    }
+                    else if(person.getAdres().toLowerCase().contains(lowerCaseFilter))
+                    {
+                        return true;
                     }
                     return false;
                 });
