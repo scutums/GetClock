@@ -118,7 +118,7 @@ public class Order {
         if(id_master != null  & price1 != null &  !nodes.isEmpty() & mas != null & !time_end.isEmpty())
         {
             db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time,time_end, price1, price2, nodes, mas, 1);
-        NewWindow();
+            NewWindow();
         }
         else
         {
@@ -131,6 +131,7 @@ public class Order {
         //global.add("Номер часов: " + String.valueOf(db_cont.Clock_id_clock));
         global.add("Мастер : " + masters_name);
         global.add("Дата сдачи в ремонт : " + local_time);
+        global.add("Дата окончания ремонта : " + time_end);
         global.add("Цена ремонта : " + String.valueOf(price1) + " грн." );
         global.add("Уплачено клиентов (в данный момент) : " + String.valueOf(price2) + " грн.");
         global.add("Имя клиента : " + local_client_f);
@@ -153,7 +154,7 @@ public class Order {
     }
 
     @FXML
-    private void NewWindow() throws Exception
+    public void NewWindow() throws Exception
     {
         orders = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("FinalOrder.fxml"));
@@ -368,7 +369,7 @@ public class Order {
     }
 
     @FXML
-    private void fotoclick() throws IOException {
+    public void fotoclick() throws IOException {
         orders1 = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("WebCamOrder.fxml"));
         orders1.setTitle("Фото изделия");

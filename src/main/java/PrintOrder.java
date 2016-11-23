@@ -47,7 +47,7 @@ public class PrintOrder {
                     // Рисуем на graphics то, что должно быть отпечатано.
                     //graphics.drawString("Прежде чем задать вопрос, прочтите правила форума!!", 100, 100);
 
-                    for (int i = 0; i <8; i++ ) {
+                    for (int i = 0; i <9; i++ ) {
                         if (i == 0)
                         { shag = 1;}
                         else {shag = i+1; }

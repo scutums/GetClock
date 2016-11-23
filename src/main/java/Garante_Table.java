@@ -1,3 +1,5 @@
+import java.io.InputStream;
+
 /**
  * Created by Alexander on 22.11.2016.
  */
@@ -10,8 +12,9 @@ public class Garante_Table {
     private String client;//
     private String phone;//
     private Integer payment;//
+    private Integer id_client;//
 
-    public Garante_Table(String stick_end ,String model_end, String master_end, String guarante, String note_end, String client, String phone,Integer payment)
+    public Garante_Table(String stick_end ,String model_end, String master_end, String guarante, String note_end, String client, String phone,Integer payment, Integer id_client)
     {
         this.stick_end=stick_end;
         this.model_end=model_end;
@@ -21,6 +24,7 @@ public class Garante_Table {
         this.client=client; //
         this.phone=phone;
         this.payment=payment;
+        this.id_client=id_client;
 
     }
 
@@ -96,6 +100,15 @@ public class Garante_Table {
     public void setPayment(Integer payment)
     {
         this.payment=payment;
+    }
+
+    public  Integer getId_client()
+    {
+        return id_client;
+    }
+    public void setId_client(Integer id_client)
+    {
+        this.id_client=id_client;
     }
 
 }

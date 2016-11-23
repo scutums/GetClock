@@ -27,6 +27,7 @@ public class SQL {
     public ObservableList<Order_back> BACK_Data = FXCollections.observableArrayList();
     public ObservableList<String>masterData = FXCollections.observableArrayList();
     public ObservableList<FOTOCLASS>fotoData = FXCollections.observableArrayList();
+    public ObservableList<Garante_Table>GARANTData = FXCollections.observableArrayList();
     public List<String> stikk = new ArrayList<String>();
     public Integer Client_id_clock;
     public Integer Clock_id_clock;
@@ -334,6 +335,29 @@ public class SQL {
 
     }
 
+    public void BD_GARANT_TABLE() //выборка
+    {
+        try {
+            ResultSet tabl = statement.executeQuery("SELECT repair_tb.id_stick, clock_tb.model, master_tb.name_master , repair_tb.guarantee , repair_tb.note_repair , client_tb.name_client , client_tb.phone_client , repair_tb.payment, client_tb.id_client FROM repair_tb, master_tb, clock_tb, client_tb WHERE repair_tb.id_clock = clock_tb.id_clock AND repair_tb.id_master = master_tb.id_master AND clock_tb.id_client = client_tb.id_client AND repair_tb.indicator = '3';");
+
+            while (tabl.next())
+            {
+                String A1 = tabl.getString(1);
+                String A2 = tabl.getString(2);
+                String A3 = tabl.getString(3);
+                String A4 = tabl.getString(4);
+                String A5 = tabl.getString(5);
+                String A6 = tabl.getString(6);
+                String A7 = tabl.getString(7);
+                Integer A8 = tabl.getInt(8);
+                Integer A9 = tabl.getInt(9);
+                GARANTData.add(new Garante_Table(A1,A2,A3,A4,A5,A6,A7,A8,A9));
+            }
+
+        }catch (SQLException e){e.printStackTrace();}
+
+    }
+
     public void UP_CL_BED(String PHON, String NOTE)
     {
         try {
@@ -410,5 +434,18 @@ public class SQL {
 
     }
 
+    public void BD_WRITE_GARANTE_STAIT( String STIC)
+    {
+        try {
+            String A1 = STIC;
+
+            String strit_end = "UPDATE repair_tb SET indicator = '4' WHERE id_stick = ?";
+            PreparedStatement prep = (PreparedStatement) connection.prepareStatement(strit_end);
+            prep.setString(1,A1);
+
+            prep.executeUpdate();
+
+        } catch (SQLException e){e.printStackTrace();}
+    }
 
 }

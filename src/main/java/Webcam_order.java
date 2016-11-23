@@ -22,7 +22,6 @@ public class Webcam_order
     @FXML
     private Label error;
     public BufferedImage image;
-    public InputStream fotos;
 
     @FXML
     private void initialize()
@@ -46,11 +45,14 @@ public class Webcam_order
         InputStream is = new ByteArrayInputStream(baos.toByteArray());
         webcam.close();
         WritableImage ima = SwingFXUtils.toFXImage(image,null);
+
         foto.setImage(ima);
-
-
         Order or = new Order();
         or.mas = is;
-        System.out.print(or.mas);
+
+        OrderGarant gar = new OrderGarant();
+        gar.mas = is;
+
+        error.setText("Готово.");
     }
 }
