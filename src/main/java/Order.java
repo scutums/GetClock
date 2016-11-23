@@ -67,7 +67,7 @@ public class Order {
     @FXML
     private TextArea node_clients;
     @FXML
-    private String local_time, nodes, Ctiks, masters_name, local_client_f, local_client_p,time_end;
+    private String local_time, nodes, Ctiks, masters_name, local_client_f, local_client_p, local_client_a, time_end,model_clocks;
     @FXML
     private CheckBox price_box;
     @FXML
@@ -127,16 +127,24 @@ public class Order {
     }
     private void BigOrder() // сбор данных
     {
-        global.add("Номер заказа : " + Ctiks);
-        //global.add("Номер часов: " + String.valueOf(db_cont.Clock_id_clock));
-        global.add("Мастер : " + masters_name);
-        global.add("Дата сдачи в ремонт : " + local_time);
-        global.add("Дата окончания ремонта : " + time_end);
-        global.add("Цена ремонта : " + String.valueOf(price1) + " грн." );
-        global.add("Уплачено клиентов (в данный момент) : " + String.valueOf(price2) + " грн.");
-        global.add("Имя клиента : " + local_client_f);
+        global.add("РЕМОНТ ЧАСОВ");
+        global.add("Яковлевские часы");
+        global.add("Харьков пр. Московский 1");
+        global.add("т.7312601, т.0737312601");
+        global.add("ф.ПО-Р1");
+        global.add("Номер заказа    : " + Ctiks);
+        global.add("Имя клиента     : " + local_client_f);
         global.add("Телефон клиента : " + local_client_p);
+        global.add("Адрес клиента   : " + local_client_a);
+        global.add("Мастер          : " + id_master);
+        global.add("Марка чавов     : " + model_clocks);
         global.add("Примечания со слов клиента : " + nodes);
+        global.add("Дата сдачи в ремонт        : " + local_time);
+        global.add("Дата окончания ремонта*    : " + time_end);
+        global.add("Цена ремонта               : " + String.valueOf(price1) + " грн." );
+        global.add("Уплачено клиентов          : " + String.valueOf(price2) + " грн.");
+        global.add("Долг                       : " + String.valueOf(price1-price2) + " грн.");
+
     }
 
     @FXML
@@ -226,6 +234,7 @@ public class Order {
             db_cont.BDWORK_WRITE_CLIENT(f, p, a, n);
             local_client_f = f;
             local_client_p = String.valueOf(p);
+            local_client_a = a;
             client_new.setText("Клиент " + local_client_f + " добавден в базу, и выбран.");
         }
     }
@@ -233,12 +242,12 @@ public class Order {
     @FXML
     private void Table_clock() //заполненеие таблицы часы
     {
-        String m = models_clock.getText();
+        model_clocks = models_clock.getText();
         if (visible_pane_client == false) {
-            db_cont.BDWOKR_WRITE_CLOCK(m, local_ckient);
+            db_cont.BDWOKR_WRITE_CLOCK(model_clocks, local_ckient);
         }
         if (visible_pane_client == true) {
-            db_cont.BDWOKR_WRITE_CLOCK(m, db_cont.Client_id_clock);
+            db_cont.BDWOKR_WRITE_CLOCK(model_clocks, db_cont.Client_id_clock);
             client_in_db.setText("Клиент формируется.");
         }
     }

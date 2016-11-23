@@ -3,9 +3,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -59,6 +63,11 @@ public class OrderGarant {
     private Label stick_wiz;
     @FXML
     private Label error;
+    @FXML
+    public static Stage orders1;
+
+    java.util.Date utilDate = new java.util.Date();
+    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
     static public ObservableList<String> global = FXCollections.observableArrayList();
 
@@ -87,12 +96,14 @@ public class OrderGarant {
         stick_end.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("stick_end"));
         model_end.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("model_end"));
         master_end.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("master_end"));
+
         guarante.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("guarante"));
         note_end.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("note_end"));
         client.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("client"));
         phone.setCellValueFactory(new PropertyValueFactory<Garante_Table, String>("phone"));
         payment.setCellValueFactory(new PropertyValueFactory<Garante_Table, Integer>("payment"));
         table_back.setItems(sq.GARANTData);
+
     }
 
     @FXML
@@ -116,6 +127,11 @@ public class OrderGarant {
     }
     private void BigOrder() // сбор данных
     {
+        global.add("РЕМОНТ ЧАСОВ");
+        global.add("Яковлевские часы");
+        global.add("Харьков пр. Московский 1");
+        global.add("т.7312601, т.0737312601");
+        global.add("ф.ПО-Р1");
         global.add("Номер заказа : " + stick);
         global.add("Мастер : " + master);
         global.add("Дата сдачи в ремонт : " + local_time);
@@ -141,8 +157,6 @@ public class OrderGarant {
     }
     private void LOCAL_TIME() //Время на машине.
     {
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         local_time_l.setText("Дата заказа : " + String.valueOf(sqlDate));
         local_time = String.valueOf(sqlDate);
 
@@ -276,6 +290,23 @@ public class OrderGarant {
     {
         Order or = new Order();
         or.fotoclick();
+    }
+    @FXML
+    private void NewWindow() throws Exception // создение окна печати
+    {
+        orders1 = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("PrintGarant.fxml"));
+        orders1.setTitle("Печать чека");
+        orders1.setScene(new Scene(root));
+        orders1.setResizable(false);
+        orders1.show();
+    }
+    @FXML
+    public void closes() //мотод закрыя окна печати
+    {
+        Main_2 ma = new Main_2();
+        orders1.close();
+        ma.Close_order_garant();
     }
 
 

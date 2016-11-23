@@ -116,5 +116,10 @@ public class Main_2 {
     {
         orders3.close();
     }
+    @FXML
+    public void Close_order_garant()
+    {
+        orders5.close();
+    }
 
 }

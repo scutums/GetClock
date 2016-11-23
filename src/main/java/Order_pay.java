@@ -267,10 +267,15 @@ public class Order_pay extends SQL
     }
     private void bid_pay() // метод збора данных для печати
     {
+        pay_glo.add("РЕМОНТ ЧАСОВ");
+        pay_glo.add("Яковлевские часы");
+        pay_glo.add("Харьков пр. Московский 1");
+        pay_glo.add("т.7312601, т.0737312601");
+        pay_glo.add("ф.ПО-Р1");
         pay_glo.add("Номер заказа : " + stik);
         pay_glo.add("Модель часов : " + mod);
         pay_glo.add("Имя мастера : " + name_mas);
-        pay_glo.add("Дата ремонта : " + local_time);
+        pay_glo.add("Дата выдачи : " + local_time);
         pay_glo.add("Гарантия до : " + date_garant);
         pay_glo.add("Оплачено : "+ paysis + " грн.");
     }

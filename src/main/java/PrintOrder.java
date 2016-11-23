@@ -47,12 +47,12 @@ public class PrintOrder {
                     // Рисуем на graphics то, что должно быть отпечатано.
                     //graphics.drawString("Прежде чем задать вопрос, прочтите правила форума!!", 100, 100);
 
-                    for (int i = 0; i <9; i++ ) {
+                    for (int i = 0; i <17; i++ ) {
                         if (i == 0)
                         { shag = 1;}
                         else {shag = i+1; }
 
-                        graphics.drawString(or.global.get(i),100,30*shag);
+                        graphics.drawString(or.global.get(i),30,10*shag);
                     }
                     return PAGE_EXISTS;
                 }

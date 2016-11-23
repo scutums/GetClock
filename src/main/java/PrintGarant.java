@@ -7,20 +7,21 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+
 /**
- * Created by Alexander on 18.11.2016.
+ * Created by Alexander on 23.11.2016.
  */
-public class Pay_Order {
+
+public class PrintGarant {
+    OrderGarant or = new OrderGarant();
     @FXML
     private ListView myListView;
-    Order_pay or = new Order_pay();
 
     @FXML
     private void initialize() {
-        or.getList();
-        myListView.setItems(or.pay_glo);
-    }
+        myListView.setItems(or.global);
 
+    }
 
     @FXML
     public void print()
@@ -40,12 +41,12 @@ public class Pay_Order {
                     // Рисуем на graphics то, что должно быть отпечатано.
                     //graphics.drawString("Прежде чем задать вопрос, прочтите правила форума!!", 100, 100);
 
-                    for (int i = 0; i <11; i++ ) {
+                    for (int i = 0; i <14; i++ ) {
                         if (i == 0)
                         { shag = 1;}
                         else {shag = i+1; }
 
-                        graphics.drawString(or.pay_glo.get(i),30,15*shag);
+                        graphics.drawString(or.global.get(i),30,10*shag);
                     }
                     return PAGE_EXISTS;
                 }
@@ -67,4 +68,8 @@ public class Pay_Order {
                 System.out.println("Error printing: " + pe);
             }
     }
+
 }
+
+
+
