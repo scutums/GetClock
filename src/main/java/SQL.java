@@ -17,7 +17,7 @@ import java.util.List;
 public class SQL {
     private static final String URL = "jdbc:mysql://localhost:3306/clock?zeroDateTimeBehavior=convertToNull";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "c5qPew5WDZqTAgXaE?KD";
 
     private Connection connection;
     private Statement statement;
@@ -42,7 +42,7 @@ public class SQL {
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
             if(!connection.isClosed())
             {
-                //System.out.println( "Соединение с БД установлено");
+                System.out.println( "Соединение с БД установлено");
             }
             statement = (Statement) connection.createStatement();
 
@@ -125,8 +125,8 @@ public class SQL {
             prep.setInt(1, Client_id_clock);
             prep.setString(2, name_client);
             prep.setString(3, phone_cl);
-            prep.setString(4, adres);
-            prep.setString(5, note_cl);
+            prep.setString(4, note_cl);
+            prep.setString(5, adres);
 
 
             prep.execute();
@@ -168,47 +168,48 @@ public class SQL {
     public void BDWORK_WRITE_REPAIR(int clock_id, int id_master, String stick, String date_start, String date_end,int value, int payment,String note,InputStream image, int INDIC)
     {
         try {
-            ArrayList ids = new ArrayList();
+           // ArrayList ids = new ArrayList();
 
-            ResultSet id_repair = statement.executeQuery("select * from repair_tb");
-            while (id_repair.next())
-            {
-                int i = id_repair.getInt("id_repair");
-                ids.add(i);
-            }
-            Integer maxKeys = 0;
-            if (!ids.isEmpty())
-            {
-                maxKeys = (Integer) Collections.max(ids);
-            }
-            Integer id_repa =maxKeys + 1;
+          //  ResultSet id_repair = statement.executeQuery("select * from repair_tb");
+          //  while (id_repair.next())
+           // {
+             //   int i = id_repair.getInt("id_repair");
+             //   ids.add(i);
+          //  }
+          //  Integer maxKeys = 0;
+         //   if (!ids.isEmpty())
+         //   {
+            //    maxKeys = (Integer) Collections.max(ids);
+         //   }
+          //  Integer id_repa =maxKeys + 1;
+            String stikc = stick;
             int id_cloc = clock_id;
             int id_maste = id_master;
-            String stikc = stick;
             String date_st = date_start;
+            String dat_en = date_end;
             int vale = value;
             int paym = payment;
             String notes = note;
             InputStream imeg = image;
-            String dat_en = date_end;
+
             int ind = INDIC;
 
 
-            String striq = "insert into repair_tb values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String striq = "insert into repair_tb values(?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement prep = (PreparedStatement) connection.prepareStatement(striq);
-            prep.setInt(1, id_repa);
+           // prep.setInt(1, id_repa);
+            prep.setString(1, stikc);
             prep.setInt(2, id_cloc);
             prep.setInt(3, id_maste);
-            prep.setString(4, stikc);
-            prep.setString(5, date_st);
+            prep.setString(4, date_st);
+            prep.setString(5, dat_en);
             prep.setString(6, "0000-00-00");
             prep.setInt(7, vale);
             prep.setInt(8, paym);
             prep.setString(9,"0000-00-00");
             prep.setString(10,notes);
             prep.setBlob(11,imeg);
-            prep.setString(12, dat_en);
-            prep.setInt(13, ind);
+            prep.setInt(12, ind);
 
 
             prep.execute();

@@ -115,9 +115,8 @@ public class Order {
         nodes_client();
         BigOrder();
         Table_clock();
-        if(id_master != null  & price1 != null &  !nodes.isEmpty() & mas != null & !time_end.isEmpty())
+        if(id_master != null  & price1 != null &  !nodes.isEmpty()  & !time_end.isEmpty())
         {
-            db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time,time_end, price1, price2, nodes, mas, 1);
             NewWindow();
         }
         else
@@ -127,6 +126,9 @@ public class Order {
     }
     private void BigOrder() // сбор данных
     {
+        System.out.println(db_cont.Clock_id_clock +" " + id_master + " " + Ctiks + " " + local_time +" "+ time_end +" "+ price1 +" "+ price2 +" "+ nodes +" "+ mas +" "+ 1);
+
+         global.clear();
         global.add("РЕМОНТ ЧАСОВ");
         global.add("Яковлевские часы");
         global.add("Харьков пр. Московский 1");
@@ -144,6 +146,8 @@ public class Order {
         global.add("Цена ремонта               : " + String.valueOf(price1) + " грн." );
         global.add("Уплачено клиентов          : " + String.valueOf(price2) + " грн.");
         global.add("Долг                       : " + String.valueOf(price1-price2) + " грн.");
+        System.out.println(global);
+
 
     }
 
@@ -156,6 +160,9 @@ public class Order {
     @FXML
     public void closes()
     {
+        System.out.println(db_cont.Clock_id_clock +" " + id_master + " " + Ctiks + " " + local_time +" "+ time_end +" "+ price1 +" "+ price2 +" "+ nodes +" "+ mas +" "+ 1);
+        db_cont.BDWORK_WRITE_REPAIR(db_cont.Clock_id_clock, id_master, Ctiks, local_time,time_end, price1, price2, nodes, mas, 1);
+        System.out.println("OK");
         orders.close();
         ma.Close_order();
 
